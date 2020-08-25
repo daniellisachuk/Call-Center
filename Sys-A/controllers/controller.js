@@ -17,6 +17,11 @@ exports.postToKafka = (req, res) => {
   //   title: "Call Center-POST",
   //   body: `Got Post Req: Waiting Calls : ${req.body.waitingCalls} Situation : ${req.body.situation}`
   // })
-    console.log(`Got Post Req: Waiting Calls : ${req.body.waitingCalls} Situation : ${req.body.situation}`);
+    console.log(`Got Post Req:
+       Waiting Calls : ${req.body.waitingCalls}
+       Situation : ${req.body.situation}`);
 
+    res.send({
+      test: "data2"
+    })
 };
