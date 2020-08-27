@@ -4,12 +4,13 @@
     <meta charset="utf-8">
     <title>{{title}}</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
   <body>
     <div class="">
-      <p>Calls Waiting</p>
+      <p id="banner">Calls Waiting - </p>
       <form id="waitingCallsDiv">
-        <input type="text" id="waitingCalls" value="">
+        <input type="text" id="waitingCalls" value="0">
         <button type="button" id="set">Set</button>
         <select id="situation">
           <option value="calm">רגיעה</option>
@@ -45,117 +46,6 @@
     <div id="harta1">
 
     </div>
-    <script type="text/javascript">
-
-      var getStrMonth = function(month){
-        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-        ];
-        return monthNames[month];
-      }
-      // if "set" button clicked
-      $('#set').click(function(){
-        $("#harta").html("harta");
-      });
-
-      // if "answerCall" button was clicked
-      $("#answerCall").click(function(){
-        console.log("Clicked");
-        // construct new row
-        var newRow = '';
-        // add opening tag
-        newRow += '<tr>';
-
-        // add start time
-        var now = new Date();
-        newRow += '<td>' + now.getDate() +
-                  '-' + getStrMonth(now.getMonth()) +
-                  '-' + now.getFullYear() +
-                  ' ,' + now.getHours() +
-                  ':' + now.getMinutes() +
-                  ':' + now.getSeconds()
-                  + '</td>';
-
-        // add city select
-        newRow += `<td>
-          <select class="city">
-            <option value="jerusalem">ירושלים</option>
-            <option value="telaviv">תל אביב</option>
-            <option value="haifa">חיפה</option>
-            <option value="eilat">אילת</option>
-            <option value="beersheva">באר שבע</option>
-            <option value="petahtiqva">פתח תקווה</option>
-            <option value="ariel">אריאל</option>
-            <option value="holon">חולון</option>
-            <option value="batyam">בת ים</option>
-          </select>
-        </td>`;
-
-        // add topic select
-        newRow += `<td>
-          <select class="topic">
-            <option value="medicine">תרופות</option>
-            <option value="food">מזון</option>
-            <option value="water">מים</option>
-            <option value="shelter">מיגון</option>
-            <option value="info">מידע</option>
-            <option value="evacuation">פינוי</option>
-            <option value="medicalAttention">טיפול רפואי</option>
-          </select>
-        </td>`;
-
-        // add language select
-        newRow += `<td>
-          <select class="language">
-            <option value="hebrew">עברית</option>
-            <option value="english">אנגלית</option>
-            <option value="amhari">אמהרית</option>
-            <option value="russian">רוסית</option>
-            <option value="thai">תאילנדית</option>
-          </select>
-        </td>`;
-
-        // add gender select
-        newRow += `<td>
-          <select class="gender">
-            <option value="male">ז</option>
-            <option value="female">נ</option>
-          </select>
-        </td>`;
-
-        // add age input
-        newRow += '<td><input type="text" class="age"></td>';
-        // add end button
-        newRow += '<td><button type="button" class="endButton">End</button></td>';
-
-        // add closing tag
-        newRow += '</tr>';
-        // append to table
-        $(".callTable tbody").append(newRow);
-      });
-
-      // if "endButton" button was clicked
-      // (needs to be selected from document because dinamically added to table[doesn't exist at first])
-      $(document).on("click", "button.endButton",function(){
-        console.log("end clicked");
-        // TODO check if age input is integer(and not Null)
-        $.post("./",
-        {
-          waitingCalls: "Donald Duck",
-          situation: "Duckburg",
-          startTime:,
-          duration:,
-          city:,
-          topic:,
-          language:,
-          gender:,
-          age:
-        },
-        function(data, status){
-          $("#harta1").html("Data: " + data.test.toString() + "\nStatus: " + status);
-          alert("Data: " + data.test.toString() + "\nStatus: " + status);
-        });
-      });
-    </script>
+    <script type="text/javascript" src="frontend.js"></script>
   </body>
 </html>

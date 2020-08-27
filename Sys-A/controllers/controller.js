@@ -19,7 +19,14 @@ exports.postToKafka = (req, res) => {
   // })
     console.log(`Got Post Req:
        Waiting Calls : ${req.body.waitingCalls}
-       Situation : ${req.body.situation}`);
+       Situation : ${req.body.situation}
+       startTime: ${req.body.startTime}
+       duration: ${req.body.duration}
+       city: ${req.body.city}
+       topic: ${req.body.topic}
+       language: ${req.body.language}
+       gender: ${req.body.gender}
+       age: ${req.body.age}`);
 
     res.send({
       test: "data2"
