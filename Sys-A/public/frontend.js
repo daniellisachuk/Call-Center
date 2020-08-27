@@ -1,22 +1,35 @@
 
+// socket init
+$(document).ready(function() {
+    //socket is global
+    socket = io.connect();
+    alert("connected");
+});
+
+
+
 var getStrMonth = function(month){
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
   ];
   return monthNames[month];
 }
+
 // if "set" button clicked
 $('#set').click(function(){
-  if(!Number.isInteger($("#waitingCalls").val())) {
+  var waitingCalls = parseInt($("#waitingCalls").val());
+  if(!Number.isInteger(waitingCalls)) {
     alert("Not Submmited :\n'Waiting Calls' Field Needs to be an Integer Value");
     return;
   }
-  $("#banner").html("Calls Waiting - " + $("#waitingCalls").val());
+  else{
+    socket.emit("waitingCalls", { waitingCalls: waitingCalls });
+  }
 });
 
 // if "answerCall" button was clicked
 $("#answerCall").click(function(){
-  console.log("Clicked");
+  console.log("Call Started");
   // construct new row
   var newRow = '';
   // add opening tag
@@ -94,7 +107,7 @@ $("#answerCall").click(function(){
 // if "endButton" button was clicked
 // (needs to be selected from document because dinamically added to table[doesn't exist at first])
 $(document).on("click", "button.endButton",function(){
-  console.log("end clicked");
+  console.log("Call Ended");
   var currentRow = $(this).closest("tr");
   var st = currentRow.find("td:eq(0)").html();
   var ag = parseInt(currentRow.find("td:eq(5) input").val())
@@ -104,9 +117,8 @@ $(document).on("click", "button.endButton",function(){
   }
 
   // TODO check if age input is integer(and not Null)
-  $.post("./",
+  socket.emit("callDetails",
   {
-    waitingCalls: $("#waitingCalls").val(),
     situation: $("#situation").val(),
     startTime: st,
     duration: (new Date() - new Date(st)) / 1000,
@@ -115,22 +127,14 @@ $(document).on("click", "button.endButton",function(){
     language: currentRow.find("td:eq(3) option:selected").val(),
     gender: currentRow.find("td:eq(4) option:selected").val(),
     age: ag
-  },
-  function(data, status){
-    if(status == "success"){
-      // set all <select> values as constant html values
-      for (var i = 1; i < 5 ; i++) {
-        var cr = currentRow.find("td:eq(" + i + ")");
-        cr.html(cr.find("option:selected").text());
-      }
-      // set ag input box as constant html value
-      currentRow.find("td:eq(5)").html(ag)
-      // disable "end" button
-      currentRow.find("td:eq(6) button").attr("disabled", "disabled");
-
-    }
-    else{
-      alert("Upload Not Seccesful\nTry Clicking 'End' Again")
-    }
   });
+
+  for (var i = 1; i < 5 ; i++) {
+    var cr = currentRow.find("td:eq(" + i + ")");
+    cr.html(cr.find("option:selected").text());
+  }
+  // set ag input box as constant html value
+  currentRow.find("td:eq(5)").html(ag)
+  // disable "end" button
+  currentRow.find("td:eq(6) button").attr("disabled", "disabled");
 });

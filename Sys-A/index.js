@@ -6,8 +6,14 @@ const express = require('express');
 const app = express();
 const port = 3001; // System A - port - 3001
 
+var server = require('http').createServer(app);
+const io = require("socket.io")(server);
+
 // Handle routes
-const router = require('./router');
+const router = require('./routes/router');
+
+// Handle kafka
+const kafka = require('./kafka/kafkaProduce');
 
 
 app.use(express.urlencoded({extended: false}));
@@ -23,6 +29,20 @@ app.set("view engine", 'hbs');
 
 app.use('/', router);
 
-app.listen(port, () => {
-  console.log("Listening on port " + port);
+io.on("connection", (socket) => {
+    console.log("new user connected");
+    // when set button pressed
+    socket.on("waitingCalls", (msg) => {
+       console.log(msg.waitingCalls)
+    });
+    // when end button called
+    socket.on("callDetails", (msg) => {
+      console.log(msg);
+      // kafka.publish(msg)
+    });
+});
+
+
+server.listen(port, () => {
+  console.log("HTTP service - System A - Running\nListening for connections on port " + port);
 });

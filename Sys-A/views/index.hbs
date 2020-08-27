@@ -3,12 +3,15 @@
   <head>
     <meta charset="utf-8">
     <title>{{title}}</title>
+    <!-- jquery for front end -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- socket.io CDN script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
     <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
   <body>
     <div class="">
-      <p id="banner">Calls Waiting - </p>
+      <p id="banner">Calls Waiting</p>
       <form id="waitingCallsDiv">
         <input type="text" id="waitingCalls" value="0">
         <button type="button" id="set">Set</button>
