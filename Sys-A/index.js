@@ -45,5 +45,5 @@ io.on("connection", (socket) => {
 
 
 server.listen(port, () => {
-  console.log("HTTP service - System A - Running\nListening for connections on port " + port);
+  console.log("HTTP Input service - System A - Running\nListening for connections on port " + port);
 });
