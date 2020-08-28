@@ -7,14 +7,13 @@ const app = express();
 const port = 3001; // System A - port - 3001
 
 var server = require('http').createServer(app);
-const io = require("socket.io")(server);
+const io = require("socket.io")(server); //websocket
 
 // Handle routes
 const router = require('./routes/router');
 
 // Handle kafka
 const kafka = require('./kafka/kafkaProduce');
-
 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
@@ -29,16 +28,18 @@ app.set("view engine", 'hbs');
 
 app.use('/', router);
 
+// WebSocket
 io.on("connection", (socket) => {
     console.log("new user connected");
     // when set button pressed
     socket.on("waitingCalls", (msg) => {
-       console.log(msg.waitingCalls)
+       console.log(`waiting Calls Updated To: ${msg.waitingCalls}`)
     });
+
     // when end button called
     socket.on("callDetails", (msg) => {
-      console.log(msg);
-      // kafka.publish(msg)
+      console.log(`New Call Detais :\n${JSON.stringify(msg)}`);
+      kafka.publish(msg)
     });
 });
 

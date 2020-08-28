@@ -1,8 +1,9 @@
+const path = require('path');
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/controller');
+controllerPath = path.join(__dirname, '../controllers/controller');
+const controller = require(controllerPath);
 
 router.get("/", controller.renderPage);
-router.post('/', controller.postToKafka);
 
 module.exports = router;
