@@ -17,6 +17,8 @@ app.set("view engine", 'hbs');
 
 app.use('/', router);
 
+const kafka = require('./kafka/KafkaConsume');
+
 // WebSocket
 io.on("connection", (socket) => {
     console.log("new user connected");

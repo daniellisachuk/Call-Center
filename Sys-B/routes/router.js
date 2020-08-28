@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('./controllers/controller');
+const path = require('path');
+controllerPath = path.join(__dirname, '../controllers/controller');
+const controller = require(controllerPath);
 
 router.get("/", controller.renderPage);
 
