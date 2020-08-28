@@ -30,17 +30,20 @@ app.use('/', router);
 
 // WebSocket
 io.on("connection", (socket) => {
-    console.log("new user connected");
-    // when set button pressed
-    socket.on("waitingCalls", (msg) => {
-       console.log(`waiting Calls Updated To: ${msg.waitingCalls}`)
-    });
+  console.log(`----> New User Connected : ${socket.id}`);
+  socket.on("disconnect", () => {
+    console.log(`<---- User Disconnected : ${socket.id}`);
+  })
+  // when set button pressed
+  socket.on("waitingCalls", (msg) => {
+     console.log(`waiting Calls Updated To: ${msg.waitingCalls}`)
+  });
 
-    // when end button called
-    socket.on("callDetails", (msg) => {
-      console.log(`New Call Detais :\n${JSON.stringify(msg)}`);
-      kafka.publish(msg)
-    });
+  // when end button called
+  socket.on("callDetails", (msg) => {
+    console.log(`New Call Detais :\n${JSON.stringify(msg)}`);
+    kafka.publish(msg)
+  });
 });
 
 
