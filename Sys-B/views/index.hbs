@@ -7,10 +7,35 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- socket.io CDN script -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="icon" type="image/png" href="/images/favicon-16x16.png">
   </head>
   <body>
+    <div class="title">
+      <h1>Real-Time Statistics</h1>
+    </div>
     <!-- body -->
+    <div class="else">
+      <div id="durationChartDiv" class="chartDiv left">
+        <canvas id="durationChart"></canvas>
+      </div>
+      <div id="cityChartDiv" class="chartDiv right">
+        <canvas id="cityChart"></canvas>
+      </div>
+      <div id="topicChartDiv" class="chartDiv left">
+        <canvas id="topicChart"></canvas>
+      </div>
+      <div id="languageChartDiv" class="chartDiv right">
+        <canvas id="languageChart"></canvas>
+      </div>
+      <div id="genderChartDiv" class="chartDiv left">
+        <canvas id="genderChart"></canvas>
+      </div>
+      <div id="ageChartDiv" class="chartDiv right">
+        <canvas id="ageChart"></canvas>
+      </div>
+    </div>
     <script type="text/javascript" src="frontend.js"></script>
   </body>
 </html>
