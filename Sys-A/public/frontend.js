@@ -3,9 +3,9 @@
 $(document).ready(function() {
     //socket is global
     socket = io.connect();
-    if(socket.connected){
+    socket.on('connect', () => {
       alert("connected");
-    }
+    });
 });
 
 
