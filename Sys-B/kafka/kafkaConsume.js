@@ -1,5 +1,6 @@
 const Kafka = require("node-rdkafka");
 
+
 const kafkaConf = {
   "group.id": "cloudkarafka-example",
   "metadata.broker.list": "rocket-01.srvs.cloudkafka.com:9094,rocket-02.srvs.cloudkafka.com:9094,rocket-03.srvs.cloudkafka.com:9094".split(","),
@@ -18,23 +19,14 @@ const consumer = new Kafka.KafkaConsumer(kafkaConf, {
   "auto.offset.reset": "beginning"
 });
 
-var counter = 0;
 
 consumer.on("error", function(err) {
-  console.error(err);
+  console.error("err");
 });
 consumer.on("ready", function(arg) {
   console.log(`Consumer ${arg.name} ready`);
   consumer.subscribe(topics);
   consumer.consume();
-});
-consumer.on("data", function(m) {
-  counter++;
-  if (counter % numMessages === 0) {
-    console.log("calling commit");
-    consumer.commit(m);
-  }
-  console.log(m.value.toString());
 });
 consumer.on("disconnected", function(arg) {
   process.exit();
@@ -44,6 +36,8 @@ consumer.on('event.error', function(err) {
   process.exit(1);
 });
 consumer.on('event.log', function(log) {
-  console.log(log);
+  // console.log(log);
 });
-consumer.connect();
+
+// export consumer to be used in index
+module.exports = consumer;
