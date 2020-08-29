@@ -4,9 +4,8 @@ const express = require('express');
 const app = express();
 const port = 3002; // System B - port - 3002
 const router = require('./routes/router');
-
 var server = require('http').createServer(app);
-const io = require("socket.io")(server); //websocket
+module.exports.server = server;
 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
@@ -17,16 +16,9 @@ app.set("view engine", 'hbs');
 
 app.use('/', router);
 
-// Reddis
-// const reddis = require(/* path to reddis uploader file */)
-
-// WebSocket
-io.on("connection", (socket) => {
-    console.log(`----> New User Connected : ${socket.id}`);
-    socket.on("disconnect", () => {
-      console.log(`<---- User Disconnected : ${socket.id}`);
-    })
-});
+// Redis
+const redis = require('./redis/Redis');
+const io = require('./websocket/websocket').getWebSocket(server);
 
 // Kafka
 var counter = 0;
@@ -40,10 +32,10 @@ kafka.on("data", function(m) {
   }
 
   jsonMessage = JSON.parse(m.value);
-  console.log(`got message:\n${jsonMessage.toString()}`);
+  console.log(`got message:\n${JSON.stringify(jsonMessage)}`);
   // console.log(m.value.toString());
 
-  // reddis.store(m);
+  redis.store(jsonMessage);
 
   // will send data to all client side sockets upon arrival of kafka data
   io.emit("callDetails", jsonMessage);

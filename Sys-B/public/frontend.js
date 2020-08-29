@@ -15,7 +15,13 @@ $(document).ready(function() {
       updateAge(msg.age);
     });
   });
+  socket.emit('getAll', '');
 });
+
+// The next part, in it's entirety, was copy-pasted from the first time i
+// made the mistake of using if-else insted of switch-case
+// Dear reader...
+// Sorry...
 
 var updateDuration = (duration) => {
     if(duration < 60){
