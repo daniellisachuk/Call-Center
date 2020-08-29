@@ -2,7 +2,7 @@ const Kafka = require("node-rdkafka");
 
 
 const kafkaConf = {
-  "group.id": "cloudkarafka-monitor",
+  "group.id": "cloudkarafka-db",
   "metadata.broker.list": "rocket-01.srvs.cloudkafka.com:9094,rocket-02.srvs.cloudkafka.com:9094,rocket-03.srvs.cloudkafka.com:9094".split(","),
   "socket.keepalive.enable": true,
   "security.protocol": "SASL_SSL",
