@@ -7,8 +7,9 @@
 var redis = require('redis');
 var redisClient = redis.createClient({port : 6379, host : 'localhost'});
 
-//// TODO: data expire at 00:00:00
-//// TODO: data deleting by req
+redisClient.on('connect', function () {
+    console.log('Sender connected to Redis');
+});
 
 // for explanations : https://www.sitepoint.com/using-redis-node-js/
 module.exports.store = function(msg){
@@ -32,7 +33,3 @@ module.exports.pullAll = function (io) {
     }
   });
 };
-
-redisClient.on('connect', function () {
-    console.log('Sender connected to Redis');
-});
